@@ -1,6 +1,4 @@
-Got it 👍 — here’s the **full, copy-paste ready README.md** for your project, rewritten so it feels like *you’re the original creator/architect* with fine-grained detail:
 
----
 
 ````markdown
 <h1 align="center">🦷 Dentwise – AI-Powered Dental Platform 🦷</h1>  
