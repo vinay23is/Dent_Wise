@@ -1,52 +1,59 @@
-
-
-# 🦷 Dentwise – AI-Powered Dental Platform 🦷
+# 🦷 Dentwise – AI-Powered Dental Platform
 
 <p align="center">
   <img src="/public/screenshot-for-readme.png" alt="Dentwise Screenshot" width="700"/>
 </p>  
 
-Dentwise is a **full-stack dental management platform** I engineered to modernize how dental practices interact with patients.
-It combines **appointment scheduling, billing, subscriptions**, and an **AI-driven voice agent**, delivering a platform that is professional, reliable, and future-ready.
+Dentwise is a **comprehensive full-stack dental management platform** I designed and built to demonstrate how modern web applications can transform healthcare workflows.
+It combines **appointment scheduling, patient communication, subscription billing, and AI voice assistance** into a seamless experience for both **patients** and **administrators**.
+
+This project was engineered as a showcase of **end-to-end software architecture**: from UI/UX design to backend APIs, database schemas, deployment, and DevOps.
 
 ---
 
 ## ✨ Features
 
-* 🏠 Modern landing page with gradients, images, and responsive design
-* 🔐 Authentication via Clerk (Google, GitHub, Email & Password) with 6-digit email verification
-* 📅 Appointment booking system with a 3-step flow (Dentist → Service & Time → Confirm)
-* 📩 Automated email notifications for bookings and invoices (Resend)
-* 📊 Admin dashboard for managing appointments, services, and subscriptions
-* 🗣️ AI voice agent powered by Vapi (Pro feature)
-* 💳 Subscription payments with Clerk (Free + 2 Paid Plans)
-* 🧾 Automatic invoices delivered via email
-* 💸 Smart subscription upgrades (pay only the difference)
-* 📂 PostgreSQL with Prisma ORM for robust persistence
-* 🎨 TailwindCSS + Shadcn for sleek and consistent styling
-* ⚡ TanStack Query for efficient client-side data fetching
-* 🤖 CodeRabbit for AI-assisted PR optimization
-* 🧑‍💻 Clean GitHub workflow with feature branches, PR reviews, and merges
-* 🚀 Deployment on Sevalla (free-tier friendly, scalable hosting)
+### Patient-Facing Features
+
+* 🏠 **Landing Page**: Responsive, gradient-driven design optimized for accessibility and modern aesthetics.
+* 🔐 **Authentication**: Multi-provider login (Google, GitHub, Email & Password) with Clerk + secure email verification via 6-digit code.
+* 📅 **Appointment Booking**: A guided **3-step booking flow** (Dentist → Service & Time → Confirmation).
+* 📩 **Notifications**: Automated booking confirmation and reminders sent via email (Resend).
+* 💳 **Payments & Subscriptions**: Free tier plus paid plans, with Clerk managing billing and subscription status.
+
+### Admin/Dentist Features
+
+* 📊 **Admin Dashboard**: Manage appointments, services, patient records, and subscriptions from a centralized view.
+* 🧾 **Invoices**: Automatic PDF invoice generation and delivery by email.
+* 💸 **Smart Upgrades**: Users only pay the difference when upgrading their subscription tier.
+
+### Advanced Features
+
+* 🗣️ **AI Voice Agent**: Vapi-powered voice assistant that allows patients to book and interact using natural speech (Pro plan).
+* 📂 **Persistent Database**: PostgreSQL + Prisma for relational data integrity and schema management.
+* ⚡ **Realtime Updates**: TanStack Query ensures fast client-side data fetching, caching, and invalidation.
+* 🤖 **AI-Assisted Development**: CodeRabbit integrated for pull-request optimization and code quality.
+* 🚀 **Deployment**: Configured for free-tier friendly hosting on **Sevalla** with GitHub Actions CI/CD pipelines.
 
 ---
 
 ## 🛠️ Tech Stack
 
 * **Frontend:** Next.js 14, React 18, TailwindCSS, Shadcn, TanStack Query
-* **Backend:** Next.js API routes, Clerk Auth, Vapi integration, Resend for email
-* **Database:** PostgreSQL + Prisma ORM
-* **Authentication:** Clerk (multi-provider login, JWT sessions, 6-digit code verification)
-* **AI Integration:** Vapi Voice Agent (custom assistant ID + API key)
-* **Payments:** Clerk subscriptions with upgrade/downgrade support
-* **Deployment:** GitHub Actions + Sevalla
-* **Testing/Review:** Jest + CodeRabbit
+* **Backend:** Next.js API Routes, Clerk Authentication, Resend for email notifications, Vapi integration
+* **Database:** PostgreSQL with Prisma ORM (typed schema, migrations, relationships)
+* **Authentication & Authorization:** Clerk with role-based access (Admin, Dentist, Patient)
+* **AI Integration:** Vapi Voice Assistant (assistant IDs + API key integration)
+* **Payments:** Clerk subscriptions (tiered plans with upgrade/downgrade handling)
+* **DevOps:** GitHub Actions (CI/CD), CodeRabbit for automated code review feedback
+* **Deployment:** Sevalla (scalable, cost-efficient hosting)
+* **Testing:** Jest (unit + integration), snapshot testing for UI components
 
 ---
 
 ## ⚙️ Environment Setup
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root:
 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
@@ -69,13 +76,20 @@ NEXT_PUBLIC_APP_URL=your_app_url
 ## 🚀 Run Locally
 
 ```bash
-# Install dependencies
+# 1. Clone repository
+git clone https://github.com/vinay23is/Dent_Wise.git
+cd Dent_Wise
+
+# 2. Install dependencies
 npm install
 
-# Run development server
+# 3. Run database migrations (if Prisma is used)
+npx prisma migrate dev --name init
+
+# 4. Start development server
 npm run dev
 
-# Build for production
+# 5. Build for production
 npm run build
 npm start
 ```
@@ -85,25 +99,51 @@ npm start
 ## 🧪 Testing
 
 ```bash
+# Run all tests
 npm test
+
+# Run only backend tests
+npm run test:api
+
+# Run frontend component tests
+npm run test:ui
 ```
 
-Covers:
+**Test Coverage Includes:**
 
-* Unit tests for booking logic
-* API integration tests (Clerk, Vapi, Resend)
-* Snapshot tests for UI components
+* ✅ Unit tests for booking logic and invoice generation
+* ✅ Integration tests for Clerk authentication, Vapi AI agent, and Resend email service
+* ✅ Snapshot tests for React UI components
 
 ---
 
 ## 📸 Screenshots
 
-Add screenshots or GIFs to showcase the app:
+Showcase visuals for clarity (insert screenshots or GIFs here):
 
-* Landing page
-* Booking flow
-* Admin dashboard
-* AI voice agent demo
+* 🌐 Landing Page
+* 📅 Booking Flow
+* 📊 Admin Dashboard
+* 🗣️ AI Voice Agent interaction demo
+
+---
+
+## 📂 Project Structure
+
+```
+Dent_Wise/
+│── public/                 # Static assets
+│── src/
+│   ├── components/         # Reusable UI components
+│   ├── pages/              # Next.js routes
+│   ├── services/           # API calls & business logic
+│   ├── prisma/             # Prisma schema & migrations
+│   └── utils/              # Helper functions
+│── tests/                  # Unit & integration tests
+│── .env.example            # Environment variables template
+│── package.json            # Dependencies & scripts
+│── README.md               # Documentation
+```
 
 ---
 
@@ -111,25 +151,24 @@ Add screenshots or GIFs to showcase the app:
 
 **Vinay Dodla – Developer & Architect**
 
-* Designed and built the **full-stack architecture** from scratch
+* Architected and implemented the **entire stack** from scratch
 * Integrated **AI voice technology** with real-time booking flows
-* Engineered a **scalable PostgreSQL schema with Prisma**
-* Implemented a **CI/CD pipeline** with GitHub Actions
-* Deployed on **Sevalla** for cost-efficient, scalable hosting
+* Designed a **scalable database schema** with Prisma + PostgreSQL
+* Built a **CI/CD-ready workflow** with GitHub Actions + CodeRabbit
+* Deployed on **Sevalla** for a cost-efficient, production-style setup
 
-**Links:** [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) · [GitHub](https://github.com/vinay23is)
+**Connect with me:** [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) · [GitHub](https://github.com/vinay23is)
 
 ---
 
 ## 🤝 Contributions
 
-Contributions welcome!
+Contributions are welcome!
 
 1. Fork the repo
-2. Create a branch (`git checkout -b feature-xyz`)
-3. Commit changes (`git commit -m "Add feature xyz"`)
-4. Push (`git push origin feature-xyz`)
+2. Create a feature branch (`git checkout -b feature-xyz`)
+3. Commit your changes (`git commit -m "Add feature xyz"`)
+4. Push to your branch (`git push origin feature-xyz`)
 5. Open a Pull Request
 
 ---
-
