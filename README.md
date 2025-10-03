@@ -1,3 +1,6 @@
+
+
+````markdown
 <h1 align="center">🦷 Dentwise – AI-Powered Dental Platform 🦷</h1>  
 
 <p align="center">
@@ -60,3 +63,80 @@ ADMIN_EMAIL=your_admin_email
 RESEND_API_KEY=your_resend_api_key
 
 NEXT_PUBLIC_APP_URL=your_app_url
+````
+
+---
+
+## 🚀 Run Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+npm start
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+npm test
+```
+
+Covers:
+
+* Unit tests for booking logic
+* API integration tests (Clerk, Vapi, Resend)
+* Snapshot tests for UI components
+
+---
+
+## 📸 Screenshots
+
+(Add screenshots or GIFs here: landing page, booking flow, admin dashboard, AI voice agent demo)
+
+---
+
+## 🧑‍💻 Author
+
+**Vinay Dodla – Developer & Architect**
+
+* Designed and built the **full-stack architecture** from scratch
+* Integrated **AI voice technology** with real-time booking flows
+* Engineered a **scalable PostgreSQL schema with Prisma**
+* Implemented a **CI/CD pipeline** with GitHub Actions
+* Deployed on **Sevalla** for cost-efficient, scalable hosting
+
+🔗 [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) | [GitHub](https://github.com/vinay23is)
+
+---
+
+## 🤝 Contributions
+
+Contributions welcome!
+
+1. Fork the repo
+2. Create a branch (`git checkout -b feature-xyz`)
+3. Commit changes (`git commit -m "Add feature xyz"`)
+4. Push (`git push origin feature-xyz`)
+5. Open a Pull Request
+
+---
+
+## 📜 License
+
+Licensed under the **MIT License**.
+
+```
+
+---
+
+
+Do you want me to also generate the **LICENSE file text** (MIT) so your repo is 100% professional and GitHub shows the license badge?
+```
