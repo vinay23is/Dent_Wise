@@ -1,53 +1,57 @@
+Ah okay, I see exactly what’s going wrong for you now.
+When you paste my earlier version, everything after **Environment Setup** is “sticking together” because the code block wasn’t properly closed.
 
+Here’s the **final clean README**, with every section separated and every code block properly opened and closed. You can copy–paste this into `README.md` without it breaking formatting:
 
-````markdown
-<h1 align="center">🦷 Dentwise – AI-Powered Dental Platform 🦷</h1>  
+---
+
+# 🦷 Dentwise – AI-Powered Dental Platform 🦷
 
 <p align="center">
   <img src="/public/screenshot-for-readme.png" alt="Dentwise Screenshot" width="700"/>
 </p>  
 
-Dentwise is a **full-stack dental management platform** I engineered to modernize how dental practices interact with patients.  
-It combines **appointment scheduling, billing, subscriptions**, and an **AI-driven voice agent**, delivering a platform that is professional, reliable, and future-ready.  
+Dentwise is a **full-stack dental management platform** I engineered to modernize how dental practices interact with patients.
+It combines **appointment scheduling, billing, subscriptions**, and an **AI-driven voice agent**, delivering a platform that is professional, reliable, and future-ready.
 
 ---
 
-## ✨ Features  
+## ✨ Features
 
-- 🏠 Modern landing page with gradients, images, and responsive design  
-- 🔐 Authentication via Clerk (Google, GitHub, Email & Password) with 6-digit email verification  
-- 📅 Appointment booking system with a 3-step flow (Dentist → Service & Time → Confirm)  
-- 📩 Automated email notifications for bookings and invoices (Resend)  
-- 📊 Admin dashboard for managing appointments, services, and subscriptions  
-- 🗣️ AI voice agent powered by Vapi (Pro feature)  
-- 💳 Subscription payments with Clerk (Free + 2 Paid Plans)  
-- 🧾 Automatic invoices delivered via email  
-- 💸 Smart subscription upgrades (pay only the difference)  
-- 📂 PostgreSQL with Prisma ORM for robust persistence  
-- 🎨 TailwindCSS + Shadcn for sleek and consistent styling  
-- ⚡ TanStack Query for efficient client-side data fetching  
-- 🤖 CodeRabbit for AI-assisted PR optimization  
-- 🧑‍💻 Clean GitHub workflow with feature branches, PR reviews, and merges  
-- 🚀 Deployment on Sevalla (free-tier friendly, scalable hosting)  
-
----
-
-## 🛠️ Tech Stack  
-
-- **Frontend:** Next.js 14, React 18, TailwindCSS, Shadcn, TanStack Query  
-- **Backend:** Next.js API routes, Clerk Auth, Vapi integration, Resend for email  
-- **Database:** PostgreSQL + Prisma ORM  
-- **Authentication:** Clerk (multi-provider login, JWT sessions, 6-digit code verification)  
-- **AI Integration:** Vapi Voice Agent (custom assistant ID + API key)  
-- **Payments:** Clerk subscriptions with upgrade/downgrade support  
-- **Deployment:** GitHub Actions + Sevalla  
-- **Testing/Review:** Jest + CodeRabbit  
+* 🏠 Modern landing page with gradients, images, and responsive design
+* 🔐 Authentication via Clerk (Google, GitHub, Email & Password) with 6-digit email verification
+* 📅 Appointment booking system with a 3-step flow (Dentist → Service & Time → Confirm)
+* 📩 Automated email notifications for bookings and invoices (Resend)
+* 📊 Admin dashboard for managing appointments, services, and subscriptions
+* 🗣️ AI voice agent powered by Vapi (Pro feature)
+* 💳 Subscription payments with Clerk (Free + 2 Paid Plans)
+* 🧾 Automatic invoices delivered via email
+* 💸 Smart subscription upgrades (pay only the difference)
+* 📂 PostgreSQL with Prisma ORM for robust persistence
+* 🎨 TailwindCSS + Shadcn for sleek and consistent styling
+* ⚡ TanStack Query for efficient client-side data fetching
+* 🤖 CodeRabbit for AI-assisted PR optimization
+* 🧑‍💻 Clean GitHub workflow with feature branches, PR reviews, and merges
+* 🚀 Deployment on Sevalla (free-tier friendly, scalable hosting)
 
 ---
 
-## ⚙️ Environment Setup  
+## 🛠️ Tech Stack
 
-Create a `.env` file in the root directory:  
+* **Frontend:** Next.js 14, React 18, TailwindCSS, Shadcn, TanStack Query
+* **Backend:** Next.js API routes, Clerk Auth, Vapi integration, Resend for email
+* **Database:** PostgreSQL + Prisma ORM
+* **Authentication:** Clerk (multi-provider login, JWT sessions, 6-digit code verification)
+* **AI Integration:** Vapi Voice Agent (custom assistant ID + API key)
+* **Payments:** Clerk subscriptions with upgrade/downgrade support
+* **Deployment:** GitHub Actions + Sevalla
+* **Testing/Review:** Jest + CodeRabbit
+
+---
+
+## ⚙️ Environment Setup
+
+Create a `.env` file in the root directory:
 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
@@ -63,7 +67,7 @@ ADMIN_EMAIL=your_admin_email
 RESEND_API_KEY=your_resend_api_key
 
 NEXT_PUBLIC_APP_URL=your_app_url
-````
+```
 
 ---
 
@@ -99,7 +103,12 @@ Covers:
 
 ## 📸 Screenshots
 
-(Add screenshots or GIFs here: landing page, booking flow, admin dashboard, AI voice agent demo)
+Add screenshots or GIFs to showcase the app:
+
+* Landing page
+* Booking flow
+* Admin dashboard
+* AI voice agent demo
 
 ---
 
@@ -113,7 +122,7 @@ Covers:
 * Implemented a **CI/CD pipeline** with GitHub Actions
 * Deployed on **Sevalla** for cost-efficient, scalable hosting
 
-🔗 [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) | [GitHub](https://github.com/vinay23is)
+**Links:** [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) · [GitHub](https://github.com/vinay23is)
 
 ---
 
@@ -129,14 +138,3 @@ Contributions welcome!
 
 ---
 
-## 📜 License
-
-Licensed under the **MIT License**.
-
-```
-
----
-
-
-Do you want me to also generate the **LICENSE file text** (MIT) so your repo is 100% professional and GitHub shows the license badge?
-```
