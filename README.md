@@ -117,16 +117,7 @@ npm run test:ui
 
 ---
 
-## 📸 Screenshots
 
-Showcase visuals for clarity (insert screenshots or GIFs here):
-
-* 🌐 Landing Page
-* 📅 Booking Flow
-* 📊 Admin Dashboard
-* 🗣️ AI Voice Agent interaction demo
-
----
 
 ## 📂 Project Structure
 
