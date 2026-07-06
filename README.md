@@ -1,165 +1,84 @@
-# 🦷 Dentwise – AI-Powered Dental Platform
+# Dentwise — AI-Powered Dental Booking Platform
+
+A full-stack dental clinic platform for patients to book appointments and talk to an AI voice assistant, and for admins/dentists to manage the schedule — built to show what a production-style healthcare booking app looks like end to end.
+
+**Live Demo:** [dent-wise-olive.vercel.app](https://dent-wise-olive.vercel.app)
 
 <p align="center">
   <img src="/public/screenshot-for-readme.png" alt="Dentwise Screenshot" width="700"/>
-</p>  
+</p>
 
-Dentwise is a **comprehensive full-stack dental management platform** I designed and built to demonstrate how modern web applications can transform healthcare workflows.
-It combines **appointment scheduling, patient communication, subscription billing, and AI voice assistance** into a seamless experience for both **patients** and **administrators**.
+## What problem does this solve?
 
-This project was engineered as a showcase of **end-to-end software architecture**: from UI/UX design to backend APIs, database schemas, deployment, and DevOps.
+Booking a dentist appointment is usually a phone call during business hours. This project explores replacing that with a guided self-service flow (pick a dentist → pick a service and time → confirm) plus an AI voice agent for patients who'd rather talk than click, while giving the clinic's admin side a single dashboard to see and manage everything that comes in. I built it to practice tying together auth, a relational database, transactional email, subscription billing, and a third-party voice AI SDK into one coherent app rather than a collection of isolated demos.
 
----
+## Tech Stack
 
-## ✨ Features
+- **Frontend:** Next.js 15 (App Router), React 19, TailwindCSS 4, shadcn/ui, TanStack Query
+- **Backend:** Next.js API routes / server actions, Clerk (auth + subscription billing)
+- **Database:** PostgreSQL + Prisma ORM
+- **AI:** Vapi voice assistant SDK (`@vapi-ai/web`) — real-time voice booking, gated behind the Pro plan
+- **Email:** Resend + React Email components for booking confirmations
+- **Deployment:** Vercel
 
-### Patient-Facing Features
+## Architecture
 
-* 🏠 **Landing Page**: Responsive, gradient-driven design optimized for accessibility and modern aesthetics.
-* 🔐 **Authentication**: Multi-provider login (Google, GitHub, Email & Password) with Clerk + secure email verification via 6-digit code.
-* 📅 **Appointment Booking**: A guided **3-step booking flow** (Dentist → Service & Time → Confirmation).
-* 📩 **Notifications**: Automated booking confirmation and reminders sent via email (Resend).
-* 💳 **Payments & Subscriptions**: Free tier plus paid plans, with Clerk managing billing and subscription status.
+- **Auth & billing** run through Clerk end-to-end: sign-in (Google/GitHub/email), role context, and the Pro subscription tier are all Clerk primitives — `middleware.ts` runs `clerkMiddleware()` on every route except static assets, and `/pro` renders Clerk's `PricingTable` component directly rather than a hand-rolled checkout flow.
+- **Data model** (`prisma/schema.prisma`) is three tables: `User` (synced from Clerk via `clerkId`), `Doctor`, and `Appointment`, which foreign-keys to both with `onDelete: Cascade`. Server actions in `src/lib/actions/` (`appointments.ts`, `doctors.ts`, `users.ts`) are the only things that talk to Prisma — no direct DB calls from components.
+- **Booking flow** lives under `src/app/appointments`, backed by `use-appointment.ts` and `use-doctors.ts` hooks with TanStack Query for caching/invalidation after a booking is created.
+- **Admin dashboard** (`src/app/admin`) is a client component (`AdminDashboardClient.tsx`) that reads appointments via the same server actions patients' bookings write to — one data path, two consumers.
+- **Voice assistant** (`src/app/voice`, `src/components/voice/VapiWidget.tsx`) instantiates the Vapi SDK client-side with a public API key and assistant ID, and is only shown to users on the Pro plan (`ProPlanRequired.tsx` gates the feature).
+- **Email**: booking confirmations are rendered as React Email templates (`src/components/emails/`) and sent via Resend from `/api/send-appointment-email`.
 
-### Admin/Dentist Features
+## Key Features
 
-* 📊 **Admin Dashboard**: Manage appointments, services, patient records, and subscriptions from a centralized view.
-* 🧾 **Invoices**: Automatic PDF invoice generation and delivery by email.
-* 💸 **Smart Upgrades**: Users only pay the difference when upgrading their subscription tier.
+- Multi-provider auth (Google, GitHub, email/password) via Clerk, with 6-digit email verification
+- Guided 3-step appointment booking (dentist → service & time → confirmation)
+- Automated booking confirmation emails via Resend + React Email
+- Tiered subscriptions (free / Pro) managed entirely through Clerk's billing primitives
+- AI voice agent (Vapi) for natural-language appointment booking, available on the Pro plan
+- Admin dashboard for managing appointments, doctors, and patient records
+- Typed, relational schema (Prisma + PostgreSQL) with cascading deletes between users, doctors, and appointments
 
-### Advanced Features
+## Interesting Engineering Decisions
 
-* 🗣️ **AI Voice Agent**: Vapi-powered voice assistant that allows patients to book and interact using natural speech (Pro plan).
-* 📂 **Persistent Database**: PostgreSQL + Prisma for relational data integrity and schema management.
-* ⚡ **Realtime Updates**: TanStack Query ensures fast client-side data fetching, caching, and invalidation.
-* 🤖 **AI-Assisted Development**: CodeRabbit integrated for pull-request optimization and code quality.
-* 🚀 **Deployment**: Configured for free-tier friendly hosting on **Sevalla** with GitHub Actions CI/CD pipelines.
+- **Billing and pricing UI delegated to Clerk's `PricingTable` component** instead of building a custom Stripe checkout — fewer moving parts to get wrong on the payment side, at the cost of being tied to Clerk's billing feature set.
+- **One set of server actions shared by both patient and admin views** — the admin dashboard doesn't have a separate "admin API," it calls the same `getAppointments()`-style actions patients' bookings write through, which keeps the data logic in one place instead of duplicating query logic per role.
+- **Voice booking is explicitly plan-gated in the UI** (`ProPlanRequired.tsx`), not just documented as a "future feature" — the free vs. Pro boundary is enforced in the component tree.
 
----
+## Running Locally
 
-## 🛠️ Tech Stack
+```bash
+git clone https://github.com/vinay23is/Dent_Wise.git
+cd Dent_Wise
+npm install
+```
 
-* **Frontend:** Next.js 14, React 18, TailwindCSS, Shadcn, TanStack Query
-* **Backend:** Next.js API Routes, Clerk Authentication, Resend for email notifications, Vapi integration
-* **Database:** PostgreSQL with Prisma ORM (typed schema, migrations, relationships)
-* **Authentication & Authorization:** Clerk with role-based access (Admin, Dentist, Patient)
-* **AI Integration:** Vapi Voice Assistant (assistant IDs + API key integration)
-* **Payments:** Clerk subscriptions (tiered plans with upgrade/downgrade handling)
-* **DevOps:** GitHub Actions (CI/CD), CodeRabbit for automated code review feedback
-* **Deployment:** Sevalla (scalable, cost-efficient hosting)
-* **Testing:** Jest (unit + integration), snapshot testing for UI components
-
----
-
-## ⚙️ Environment Setup
-
-Create a `.env` file in the project root:
-
+Create a `.env` file:
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
-
 DATABASE_URL=your_postgres_database_url
-
 NEXT_PUBLIC_VAPI_ASSISTANT_ID=your_vapi_assistant_id
 NEXT_PUBLIC_VAPI_API_KEY=your_vapi_api_key
-
 ADMIN_EMAIL=your_admin_email
-
 RESEND_API_KEY=your_resend_api_key
-
 NEXT_PUBLIC_APP_URL=your_app_url
 ```
 
----
-
-## 🚀 Run Locally
-
 ```bash
-# 1. Clone repository
-git clone https://github.com/vinay23is/Dent_Wise.git
-cd Dent_Wise
+npx prisma migrate dev --name init   # set up the database schema
+npm run dev                          # http://localhost:3000
+```
 
-# 2. Install dependencies
-npm install
-
-# 3. Run database migrations (if Prisma is used)
-npx prisma migrate dev --name init
-
-# 4. Start development server
-npm run dev
-
-# 5. Build for production
+Production build:
+```bash
 npm run build
 npm start
 ```
 
----
+## Author
 
-## 🧪 Testing
+**Vinay Dodla** — architected and built the full stack, including the booking flow, Prisma schema, Clerk auth/billing integration, and Vapi voice assistant integration.
 
-```bash
-# Run all tests
-npm test
-
-# Run only backend tests
-npm run test:api
-
-# Run frontend component tests
-npm run test:ui
-```
-
-**Test Coverage Includes:**
-
-* ✅ Unit tests for booking logic and invoice generation
-* ✅ Integration tests for Clerk authentication, Vapi AI agent, and Resend email service
-* ✅ Snapshot tests for React UI components
-
----
-
-
-
-## 📂 Project Structure
-
-```
-Dent_Wise/
-│── public/                 # Static assets
-│── src/
-│   ├── components/         # Reusable UI components
-│   ├── pages/              # Next.js routes
-│   ├── services/           # API calls & business logic
-│   ├── prisma/             # Prisma schema & migrations
-│   └── utils/              # Helper functions
-│── tests/                  # Unit & integration tests
-│── .env.example            # Environment variables template
-│── package.json            # Dependencies & scripts
-│── README.md               # Documentation
-```
-
----
-
-## 🧑‍💻 Author
-
-**Vinay Dodla – Developer & Architect**
-
-* Architected and implemented the **entire stack** from scratch
-* Integrated **AI voice technology** with real-time booking flows
-* Designed a **scalable database schema** with Prisma + PostgreSQL
-* Built a **CI/CD-ready workflow** with GitHub Actions + CodeRabbit
-* Deployed on **Sevalla** for a cost-efficient, production-style setup
-
-**Connect with me:** [LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) · [GitHub](https://github.com/vinay23is)
-
----
-
-## 🤝 Contributions
-
-Contributions are welcome!
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature-xyz`)
-3. Commit your changes (`git commit -m "Add feature xyz"`)
-4. Push to your branch (`git push origin feature-xyz`)
-5. Open a Pull Request
-
----
+[LinkedIn](https://www.linkedin.com/in/vinay-dodla-695232213/) · [GitHub](https://github.com/vinay23is)
